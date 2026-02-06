@@ -1,0 +1,10 @@
+# ninja log v7
+17	741	7920824050311911	CMakeFiles/Chessel.dir/main.cpp.obj	90ad043aa8a8d038
+13	893	7920827398943554	CMakeFiles/Chessel.dir/board.cpp.obj	28757480604f7d49
+895	1105	7920827407725103	Chessel.exe	1bcdfc449bf5eb43
+8	617	7920829782033044	CMakeFiles/Chessel.dir/main.cpp.obj	90ad043aa8a8d038
+20	1316	7920829782217823	CMakeFiles/Chessel.dir/board.cpp.obj	28757480604f7d49
+1316	1525	7920829795183784	Chessel.exe	1bcdfc449bf5eb43
+8	629	7920830091164539	CMakeFiles/Chessel.dir/main.cpp.obj	90ad043aa8a8d038
+17	1312	7920830091346331	CMakeFiles/Chessel.dir/board.cpp.obj	28757480604f7d49
+1313	1520	7920830104307334	Chessel.exe	1bcdfc449bf5eb43
