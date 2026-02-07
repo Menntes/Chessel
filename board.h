@@ -23,3 +23,5 @@ public:
     void display();
 
 };
+
+std::string getSquareName(int squareIndex);
