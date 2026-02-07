@@ -3,13 +3,18 @@
 #include <map>
 #include <cctype>
 
- void Board::loadFromFen(std::string fen){
+Board::Board() {
+    for( int i = 0; i < 64; i++) 
+    squares[i] = 0;
+}
+
+void Board::loadFromFen(std::string fen){
 
     for(int i = 0; i <64; i++){
         squares[i] = Piece::Empty;
     }
 
-    std::map<char, int> pieceTypeFromSybol = {
+    std::map<char, int> pieceTypeFromSymbol = {
         {'k', Piece::King}, {'p', Piece::Pawn}, {'n', Piece::Knight}, 
         {'b',Piece::Bishop}, {'r', Piece::Rook}, {'q', Piece::Queen}
     };
@@ -30,17 +35,14 @@
             }
             else{
                 int pieceColour = (isupper(symbol)) ? Piece::White : Piece::Black;
-                int pieceType = pieceTypeFromSybol[tolower(symbol)];
+                int pieceType = pieceTypeFromSymbol[tolower(symbol)];
 
                 squares[rank * 8 + file] = pieceType | pieceColour;
                 file++;
 
             }
-
         }
-
     }
-
  }
 
 void Board::display(){
@@ -50,4 +52,5 @@ void Board::display(){
             }
             std::cout << std::endl;
         }
+        std::cout <<"a  b  c  d  e  f  g  h" << std::endl;
     }

@@ -18,6 +18,7 @@ namespace Piece {
 class Board{
 public:
     int squares[64];
+    Board();
     void loadFromFen(std::string fen);
     void display();
 

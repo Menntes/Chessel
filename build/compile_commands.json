@@ -10,5 +10,11 @@
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -g -std=gnu++17 -o CMakeFiles\\Chessel.dir\\board.cpp.obj -c C:\\Users\\madre\\Documents\\Github\\Chessel\\board.cpp",
   "file": "C:/Users/madre/Documents/Github/Chessel/board.cpp",
   "output": "C:/Users/madre/Documents/Github/Chessel/build/CMakeFiles/Chessel.dir/board.cpp.obj"
+},
+{
+  "directory": "C:/Users/madre/Documents/Github/Chessel/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -g -std=gnu++17 -o CMakeFiles\\Chessel.dir\\moveGenerator.cpp.obj -c C:\\Users\\madre\\Documents\\Github\\Chessel\\moveGenerator.cpp",
+  "file": "C:/Users/madre/Documents/Github/Chessel/moveGenerator.cpp",
+  "output": "C:/Users/madre/Documents/Github/Chessel/build/CMakeFiles/Chessel.dir/moveGenerator.cpp.obj"
 }
 ]

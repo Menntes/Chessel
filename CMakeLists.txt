@@ -4,4 +4,4 @@ project(Chessel)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(Chessel main.cpp board.cpp) 
+add_executable(Chessel main.cpp board.cpp moveGenerator.cpp) 

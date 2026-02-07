@@ -65,6 +65,14 @@ build CMakeFiles/Chessel.dir/board.cpp.obj: CXX_COMPILER__Chessel_unscanned_Debu
   OBJECT_FILE_DIR = CMakeFiles\Chessel.dir
   TARGET_SUPPORT_DIR = CMakeFiles\Chessel.dir
 
+build CMakeFiles/Chessel.dir/moveGenerator.cpp.obj: CXX_COMPILER__Chessel_unscanned_Debug C$:/Users/madre/Documents/Github/Chessel/moveGenerator.cpp || cmake_object_order_depends_target_Chessel
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles\Chessel.dir\moveGenerator.cpp.obj.d
+  FLAGS = -g -std=gnu++17
+  OBJECT_DIR = CMakeFiles\Chessel.dir
+  OBJECT_FILE_DIR = CMakeFiles\Chessel.dir
+  TARGET_SUPPORT_DIR = CMakeFiles\Chessel.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Chessel
@@ -73,7 +81,7 @@ build CMakeFiles/Chessel.dir/board.cpp.obj: CXX_COMPILER__Chessel_unscanned_Debu
 #############################################
 # Link the executable Chessel.exe
 
-build Chessel.exe: CXX_EXECUTABLE_LINKER__Chessel_Debug CMakeFiles/Chessel.dir/main.cpp.obj CMakeFiles/Chessel.dir/board.cpp.obj
+build Chessel.exe: CXX_EXECUTABLE_LINKER__Chessel_Debug CMakeFiles/Chessel.dir/main.cpp.obj CMakeFiles/Chessel.dir/board.cpp.obj CMakeFiles/Chessel.dir/moveGenerator.cpp.obj
   CONFIG = Debug
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
