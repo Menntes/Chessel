@@ -23,6 +23,15 @@ namespace Piece {
 class Board{
 public:
     int squares[64];
+
+    int sideToMove;
+    bool whiteCanCastleKingside;
+    bool whiteCanCastleQueenside;
+    bool blackCanCastleKingside;
+    bool blackCanCastleQueenside;
+    int enPassantSquare;
+    int halfmoveClock;
+    int fullmoveNumber;
     Board();
     void loadFromFen(std::string fen);
     void display();

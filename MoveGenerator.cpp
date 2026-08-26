@@ -8,7 +8,6 @@ MoveGenerator::MoveGenerator(){
     PrecomputeMoveData();
 }
 
-
 void MoveGenerator::PrecomputeMoveData(){
     for (int file = 0; file < 8; file++){
         for(int rank = 0; rank < 8; rank++){
@@ -106,8 +105,9 @@ void MoveGenerator::GenerateSlidingMoves(int startSquare, int piece, Board& boar
             //If it's blocked  by a friendly piece, stop looking 
             if (isFriendly(piece, pieceOnTargetSquare))
                 break;
-                
-            moves.push_back(Move(startSquare, targetSquare));
+
+            MoveFlag flag = isEnemy(piece, pieceOnTargetSquare) ? MoveFlag::Capture : MoveFlag::Quiet;
+            moves.push_back(Move(startSquare, targetSquare, flag));
 
             //If it's an enemy piece, we capture it and then stop looking
             if(isEnemy(piece, pieceOnTargetSquare)) 
@@ -133,9 +133,9 @@ void MoveGenerator::GenerateKnightMoves(int startSquare, int piece, Board& board
             if(fileDistance <= 2 ){
                 int pieceOnTarget = board.squares[targetSquare];
 
-                //Friendly piece check
-                if (isEnemy(piece, pieceOnTarget)){
-                    moves.push_back(Move(startSquare, targetSquare));
+                if (!isFriendly(piece, pieceOnTarget)){
+                    MoveFlag flag = isEnemy(piece, pieceOnTarget) ? MoveFlag::Capture : MoveFlag::Quiet;
+                    moves.push_back(Move(startSquare, targetSquare, flag));
                 }
             }
         } 
@@ -159,9 +159,9 @@ void MoveGenerator::GenerateKingMoves(int startSquare, int piece, Board& board, 
         if (fileDistance <=1){
             int pieceOnTarget = board.squares[targetSquare];
 
-            //Friendly piece check
-            if (isEnemy(piece, pieceOnTarget)){
-                moves.push_back(Move(startSquare, targetSquare));
+            if (!isFriendly(piece, pieceOnTarget)){
+                MoveFlag flag = isEnemy(piece, pieceOnTarget) ? MoveFlag::Capture : MoveFlag::Quiet;
+                moves.push_back(Move(startSquare, targetSquare, flag));
             }
         }
        }
@@ -178,13 +178,14 @@ void MoveGenerator::GeneratePawnMoves(int startSquare, int piece, Board& board, 
     //Forward move (1 square)
     int oneSquareForward = startSquare + direction;
     if (board.squares[oneSquareForward] == Piece::Empty){
-        moves.push_back(Move(startSquare,oneSquareForward));
+        moves.push_back(Move(startSquare,oneSquareForward,MoveFlag::Quiet));
+        
 
         //Double push (Only from the starting rank!!)
         bool isStartingRank = (isWhite && startRank == 1) ||(!isWhite && startRank == 6);
         int twoSquaresForward = startSquare + (2*direction);
         if (isStartingRank && board.squares[twoSquaresForward] == Piece::Empty){
-            moves.push_back(Move(startSquare, twoSquaresForward));
+            moves.push_back(Move(startSquare, twoSquaresForward,MoveFlag::DoublePawnPush));
         }
     }
     
@@ -201,7 +202,7 @@ void MoveGenerator::GeneratePawnMoves(int startSquare, int piece, Board& board, 
                 int pieceOnTarget = board.squares[targetSquare];
 
                 if (isEnemy(piece, pieceOnTarget)){
-                    moves.push_back(Move(startSquare, targetSquare));
+                    moves.push_back(Move(startSquare, targetSquare, MoveFlag::Capture));
                 }
             }
 

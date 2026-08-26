@@ -2,29 +2,61 @@
 #include <iostream>
 #include <map>
 #include <cctype>
+#include <sstream>
 
 Board::Board() {
     for( int i = 0; i < 64; i++) 
     squares[i] = 0;
+    sideToMove = Piece::White;
+    whiteCanCastleKingside = false;
+    whiteCanCastleQueenside = false;
+    blackCanCastleKingside = false;
+    blackCanCastleQueenside = false;
+    enPassantSquare = -1;
+    halfmoveClock = 0;
+    fullmoveNumber = 1;
+
 }
 
 void Board::loadFromFen(std::string fen){
-
-    for(int i = 0; i <64; i++){
-        squares[i] = Piece::Empty;
-    }
-
+    
+    for( int i = 0; i < 64; i++) 
+    squares[i] = 0;
+    sideToMove = Piece::White;
+    whiteCanCastleKingside = false;
+    whiteCanCastleQueenside = false;
+    blackCanCastleKingside = false;
+    blackCanCastleQueenside = false;
+    enPassantSquare = -1;
+    halfmoveClock = 0;
+    fullmoveNumber = 1;
+    
     std::map<char, int> pieceTypeFromSymbol = {
         {'k', Piece::King}, {'p', Piece::Pawn}, {'n', Piece::Knight}, 
         {'b',Piece::Bishop}, {'r', Piece::Rook}, {'q', Piece::Queen}
     };
 
-    std::string fenBoard = fen.substr(0, fen.find(' '));
+    std::istringstream fenLine(fen);
+    std::string fenBoard;
+    char sideToMoveLine;
+    std::string castlingRights;
+    std::string enPassantTargetSquare;
+    int halfMoveClockLine = 0;
+    int fullMoveNumLine = 0;
+
+
+    if (!(fenLine >> fenBoard >> sideToMoveLine >> castlingRights >> enPassantTargetSquare >> halfMoveClockLine >> fullMoveNumLine)) {
+        std::cerr << "Incomplete Fenn \n";
+        return;
+    }
+
+    //First part of parse, field 1
+
     int file = 0;
     int rank = 7;
 
     for(char symbol : fenBoard ) {
-
+ 
         if (symbol == '/') {
             file = 0;
             rank--;
@@ -43,6 +75,41 @@ void Board::loadFromFen(std::string fen){
             }
         }
     }
+    
+    //Second part of parse, side to move
+    sideToMove = (sideToMoveLine == 'w') ? Piece::White : Piece::Black;
+
+    //Third part of parse, castling rights
+    for(char symbol : castlingRights) {
+        switch (symbol){
+            case 'K':
+                whiteCanCastleKingside = true;
+                break;
+            case 'Q':
+                whiteCanCastleQueenside = true;
+                break;
+            case 'k':
+                blackCanCastleKingside = true;
+                break;
+            case 'q':
+                blackCanCastleQueenside = true;
+        }
+    }
+
+    //Fourth part of parse, En passant target
+    if (enPassantTargetSquare == "-" || enPassantTargetSquare.size() < 2) {
+        enPassantSquare = -1;
+    }
+    else {
+        int epFile = enPassantTargetSquare[0] - 'a';
+        int epRank = enPassantTargetSquare[1] - '1';
+        enPassantSquare = epRank * 8 + epFile;
+    }
+
+    //Last parse, halfmove/fullmove
+    halfmoveClock = halfMoveClockLine;
+    fullmoveNumber = fullMoveNumLine;
+    
  }
 
 namespace {

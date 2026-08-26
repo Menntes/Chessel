@@ -9,7 +9,7 @@ int main() {
 
     std::string normalLayout = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    myBoard.loadFromFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+    myBoard.loadFromFen("8/8/4P1p1/8/5n2/8/8/8 w KQkq - 0 1");
     myBoard.display();
 
     std::vector<Move> moves = gen.GenerateMoves(myBoard);
