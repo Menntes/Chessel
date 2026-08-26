@@ -13,6 +13,11 @@ namespace Piece {
 
     const int White = 8;
     const int Black = 16;
+
+    // Type bits (King..Queen) and color bits (White/Black) never overlap,
+    // so masking each out is safe even for Piece::Empty (0).
+    inline int typeOf(int piece) { return piece & 7; }
+    inline int colorOf(int piece) { return piece & (White | Black); }
 }
 
 class Board{

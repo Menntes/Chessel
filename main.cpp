@@ -1,4 +1,4 @@
-#include "board.h"
+#include "Board.h"
 #include "MoveGenerator.h"
 #include <iostream>
 
@@ -9,7 +9,7 @@ int main() {
 
     std::string normalLayout = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    myBoard.loadFromFen("8/8/8/8/8/8/P7/R7 w - - 0 1");
+    myBoard.loadFromFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
     myBoard.display();
 
     std::vector<Move> moves = gen.GenerateMoves(myBoard);

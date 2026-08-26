@@ -1,4 +1,4 @@
-#include "board.h"
+#include "Board.h"
 #include <iostream>
 #include <map>
 #include <cctype>
@@ -45,10 +45,27 @@ void Board::loadFromFen(std::string fen){
     }
  }
 
+namespace {
+    // Same letters loadFromFen reads (KQRBNP), uppercase = white, lowercase = black.
+    char pieceToChar(int piece){
+        char letter;
+        switch (Piece::typeOf(piece)) {
+            case Piece::King:   letter = 'k'; break;
+            case Piece::Queen:  letter = 'q'; break;
+            case Piece::Rook:   letter = 'r'; break;
+            case Piece::Bishop: letter = 'b'; break;
+            case Piece::Knight: letter = 'n'; break;
+            case Piece::Pawn:   letter = 'p'; break;
+            default:            return '.';
+        }
+        return (Piece::colorOf(piece) == Piece::White) ? toupper(letter) : letter;
+    }
+}
+
 void Board::display(){
         for(int rank = 7; rank>= 0; rank--){
             for (int file = 0; file <8; file++){
-                std::cout << squares[rank * 8 + file] << " ";
+                std::cout << pieceToChar(squares[rank * 8 + file]) << " ";
             }
             std::cout << std::endl;
         }

@@ -25,8 +25,8 @@ void MoveGenerator::PrecomputeMoveData(){
             //Store them in the array
             numSquaresToEdge[squareIndex][0] = numNorth;
             numSquaresToEdge[squareIndex][1] = numSouth;
-            numSquaresToEdge[squareIndex][2] = numWest;
-            numSquaresToEdge[squareIndex][3] = numEast;
+            numSquaresToEdge[squareIndex][2] = numEast;
+            numSquaresToEdge[squareIndex][3] = numWest;
 
             //Diagonals are combinations, ie North-West is just 
             //how far north and how far west you can go
@@ -50,7 +50,7 @@ std::vector<Move> MoveGenerator::GenerateMoves (Board& board){
         if (piece == Piece::Empty) 
         continue;
 
-        int type = piece % 8;
+        int type = Piece::typeOf(piece);
         if(isSlidingPiece(piece)){
             GenerateSlidingMoves(startSquare, piece, board, moves);
         }
@@ -68,37 +68,33 @@ std::vector<Move> MoveGenerator::GenerateMoves (Board& board){
 }
 
 bool MoveGenerator::isSlidingPiece(int piece){
-    int type;
-    // 
-    if (piece >= 16)// It's Black
-    type = piece -16;
-    else if(piece >=8)// It's White
-    type = piece -8;
-    else 
-    type = piece; //It's Empty(0)
-
+    int type = Piece::typeOf(piece);
     return type == Piece::Rook || type == Piece::Bishop || type == Piece::Queen;
 }
 
+bool MoveGenerator::isEmpty(int piece){
+    return piece == Piece::Empty;
+}
+
 bool MoveGenerator::isFriendly(int myPiece, int otherPiece) {
-    if (otherPiece == 0)
+    if (isEmpty(otherPiece))
     return false;
 
-    return (myPiece >=16) == (otherPiece >=16);
+    return Piece::colorOf(myPiece) == Piece::colorOf(otherPiece);
 }
 
 bool MoveGenerator::isEnemy(int myPiece, int otherPiece){
-    if (otherPiece == 0)
+    if (isEmpty(otherPiece))
     return false;
 
-    return !((myPiece >=16) == (otherPiece >=16));
+    return Piece::colorOf(myPiece) != Piece::colorOf(otherPiece);
 }
 
 //Generates possible moves for sliding pieces: Rook, Bishop, and the Queen
 void MoveGenerator::GenerateSlidingMoves(int startSquare, int piece, Board& board, std::vector<Move>& moves){
 
-    int startDir = (piece % 8 == Piece::Bishop) ? 4 : 0;
-    int endDir = (piece % 8 == Piece::Rook) ? 4 : 8;
+    int startDir = (Piece::typeOf(piece) == Piece::Bishop) ? 4 : 0;
+    int endDir = (Piece::typeOf(piece) == Piece::Rook) ? 4 : 8;
 
     for(int directionIndex = startDir; directionIndex < endDir; directionIndex++ ){
         for(int n = 0; n < numSquaresToEdge[startSquare][directionIndex]; n++){
@@ -155,7 +151,7 @@ void MoveGenerator::GenerateKingMoves(int startSquare, int piece, Board& board, 
        int targetSquare = startSquare + offset;
 
        //Is it on the board?
-       if (targetSquare > 0 && targetSquare < 64){
+       if (targetSquare >= 0 && targetSquare < 64){
         int targetFile = targetSquare % 8;
         int fileDistance = std::abs(targetFile - startFile);
 
@@ -174,7 +170,7 @@ void MoveGenerator::GenerateKingMoves(int startSquare, int piece, Board& board, 
 
 //Generates possible pawn moves
 void MoveGenerator::GeneratePawnMoves(int startSquare, int piece, Board& board, std::vector<Move>& moves){
-    bool isWhite = (piece >= 8 && piece < 16);
+    bool isWhite = (Piece::colorOf(piece) == Piece::White);
     int direction = isWhite ? 8 : -8;
     int startRank = startSquare / 8;
     int startFile = startSquare % 8;
@@ -211,6 +207,8 @@ void MoveGenerator::GeneratePawnMoves(int startSquare, int piece, Board& board, 
 
         }
     }
+
+    //
 
 }
 

@@ -22,6 +22,7 @@ class MoveGenerator {
     private: void GeneratePawnMoves(int startSquare, int piece, Board& board, std::vector<Move>& moves);
 
     private: bool isSlidingPiece(int piece);
+    private: bool isEmpty(int piece);
     private: bool isFriendly(int myPiece, int otherPiece);
     private: bool isEnemy(int myPiece, int otherPiece);
     
