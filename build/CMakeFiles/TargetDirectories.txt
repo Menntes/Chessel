@@ -1,0 +1,3 @@
+C:/Users/madre/Documents/Github/Chessel/build/CMakeFiles/Chessel.dir
+C:/Users/madre/Documents/Github/Chessel/build/CMakeFiles/edit_cache.dir
+C:/Users/madre/Documents/Github/Chessel/build/CMakeFiles/rebuild_cache.dir
