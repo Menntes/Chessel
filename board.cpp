@@ -54,3 +54,9 @@ void Board::display(){
         }
         std::cout <<"a  b  c  d  e  f  g  h" << std::endl;
     }
+
+std::string getSquareName(int squareIndex){
+    char file = 'a' + (squareIndex % 8);
+    char rank = '1' + (squareIndex / 8);
+    return std::string (1, file) + std::string(1, rank);
+};

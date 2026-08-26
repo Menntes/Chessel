@@ -9,7 +9,7 @@ int main() {
 
     std::string normalLayout = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-    myBoard.loadFromFen("8/8/8/3Q4/3R/8/8/8");
+    myBoard.loadFromFen("8/8/8/8/8/8/P7/R7 w - - 0 1");
     myBoard.display();
 
     std::vector<Move> moves = gen.GenerateMoves(myBoard);
@@ -19,7 +19,7 @@ int main() {
     std::cout << "Total Moves found:" << moves.size() << "\n" ;
 
     for(const auto & move : moves){
-        std::cout << "Move: " << move.startSquare << " to " << move.targetSquare << '\n';
+        std::cout << getSquareName(move.startSquare) << getSquareName(move.targetSquare) << " ";
     }
 
     return 0;
