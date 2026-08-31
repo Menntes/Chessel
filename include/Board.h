@@ -1,5 +1,7 @@
 #pragma once
+#include "Move.h"
 #include <string>
+#include <vector>
 
 namespace Piece {
 
@@ -36,6 +38,21 @@ public:
     void loadFromFen(std::string fen);
     void display();
 
+    struct Undo {
+        int capturedPiece;
+        int previousEnPassantSqaure;
+        int previousHalfmoveClock;
+        int previousFullmoveNumber;
+    };
+
+    std::vector<Undo> history;
+    void makeMove(const Move& move);
+    void unmakeMove(const Move& move);
+
 };
 
 std::string getSquareName(int squareIndex);
+
+
+
+

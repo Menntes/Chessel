@@ -144,3 +144,63 @@ std::string getSquareName(int squareIndex){
     char rank = '1' + (squareIndex / 8);
     return std::string (1, file) + std::string(1, rank);
 };
+
+void Board::makeMove(const Move& move){
+    int movedPiece = squares[move.startSquare];
+    int capturedPiece = squares[move.targetSquare];
+
+    //Saves what's about to be destroyed
+    Undo u;
+    u.capturedPiece = capturedPiece;
+    u.previousEnPassantSqaure = enPassantSquare;
+    u.previousHalfmoveClock = halfmoveClock;
+    u.previousFullmoveNumber = fullmoveNumber;
+    history.push_back(u);
+
+    //Moves the piece
+    squares[move.targetSquare] = movedPiece;
+    squares[move.startSquare] = Piece::Empty;
+
+    //En passant sqaure: only a double pawn push sets one, everything else clears it
+    if (move.flag == MoveFlag::DoublePawnPush){
+        if(sideToMove == Piece::White){
+            enPassantSquare = (sideToMove == Piece::White) ? move.targetSquare - 8: move.targetSquare + 8;
+        }
+        else{
+            enPassantSquare = -1;
+        }
+    }
+
+    //Half move clock
+    if (Piece::typeOf(movedPiece) == Piece::Pawn || capturedPiece != Piece::Empty){
+        halfmoveClock = 0;
+    }
+    else{
+        halfmoveClock++;
+    }
+
+    //Fullmove number
+    if(sideToMove == Piece::Black){
+        fullmoveNumber++;
+    }
+
+    //Flip sideToMove.
+    sideToMove = (sideToMove == Piece::White) ? Piece::Black : Piece::White;
+}
+
+void Board::unmakeMove(const Move& move){
+    Undo u = history.back();
+    history.pop_back();
+
+    int movedPiece = squares[move.targetSquare];
+
+    squares[move.startSquare] = movedPiece;
+    squares[move.targetSquare] = u.capturedPiece;
+
+    enPassantSquare = u.previousEnPassantSqaure;
+    halfmoveClock = u.previousHalfmoveClock;
+    fullmoveNumber = u.previousFullmoveNumber;
+
+    sideToMove = (sideToMove == Piece::White) ? Piece::Black : Piece::White;
+
+}
